@@ -1,59 +1,33 @@
-// var video;
+document.addEventListener('DOMContentLoaded', (event) => {
+
+  const video = document.getElementById('player1');
+  video.autoplay = false;
+  video.loop = false;
 
 
-
-// window.addEventListener("load", function() {
-// 	console.log("Good job opening the window")
-
-// });
-
-// document.querySelector("#play").addEventListener("click", function() {
-// 	console.log("Play Video");
-// });
-
-const video = document.querySelector('.video');
-video.autoplay = false;
-video.loop = false;
-
-const playButton = document.getElementById('play');
-playButton.addEventListener('click', () => {
-  if (video.paused) {
-    video.play();
-  } else {
-    video.pause();
+  function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const secondsPart = Math.floor(seconds % 60);
+    return `${minutes}:${secondsPart < 10 ? '0' : ''}${secondsPart}`;
   }
-});
 
-let playbackRate = 1.0;
+  function updateTime() {
+    document.getElementById('currentTime').textContent = formatTime(video.currentTime)
+    document.getElementById('duration').textContent = formatTime(video.duration)
+  }
 
-document.getElementById('slower').addEventListener('click', () => {
-  playbackRate -= 0.1;
-  video.playbackRate = playbackRate;
-  console.log(`New speed: ${playbackRate}`);
-});
+  video.addEventListener('loadmetadata', updateTime);
 
-document.getElementById('faster').addEventListener('click', () => {
-  playbackRate += 0.1;
-  video.playbackRate = playbackRate;
-  console.log(`New speed: ${playbackRate}`);
-});
+  video.addEventListener('timeupdate', updateTime);
 
-document.getElementById('skip').addEventListener('click', () => {
-	if (video.currentTime + 10 < video.duration) {
-	  video.currentTime += 10;
-	} else {
-	  video.currentTime = 0;
-	}
-	console.log(`Current time: ${video.currentTime}`);
-  });
+  document.getElementById('play').addEventListener('click', function() {
+    video.play();
+    updateVolumeInfo();
+  })
 
-  const muteButton = document.getElementById('mute-button');
-muteButton.addEventListener('click', () => {
-  video.muted = !video.muted;
-  muteButton.innerText = video.muted ? 'Unmute' : 'Mute';
-});
 
-const volumeSlider = document.getElementById('volume-slider');
-volumeSlider.addEventListener('input', () => {
-  video.volume = volumeSlider.value / 100;
-});
+  document.getElementById('pause').addEventListener('click', function() {
+    video.pause();
+  })
+
+})
