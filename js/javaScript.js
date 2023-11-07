@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
     })
 
-  document.getElementById('skip-ahead').addEventListener('click', function() {
+  document.getElementById('skip').addEventListener('click', function() {
     if (video.currentTime + 10 < video.duration) {
       video.currentTime += 10;
     } else {
@@ -83,11 +83,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     volumeInfo.textContent = `${Math.round(video.volume * 100)}%`;
   }
 
-  oldSchoolButton.addEventListener('click', function() {
+  oldSchoolButton.getElementById('vintage').addEventListener('click', function() {
     video.classList.add('oldSchool');
   });
 
-  originalButton.addEventListener('click', function() {
+  originalButton.getElementById('orig').addEventListener('click', function() {
     video.classList.remove('oldSchool');
   });
 
