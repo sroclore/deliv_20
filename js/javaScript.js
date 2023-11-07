@@ -5,16 +5,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
   video.autoplay = false;
   video.loop = false;
 
-  video.classList.add('oldSchool');
+  const oldSchoolButton = document.getElementById('oldSchool');
+  const originalButton = document.getElementById('original');
 
   const volumeSlider = document.getElementById('slider');
   volumeSlider.addEventListener('input', () => {
   video.volume = volumeSlider.value / 100;
   });
 
+  const muteButton = document.getElementById('mute');
+
+  muteButton.addEventListener('click', function() {
+    video.muted = !video.muted;
+    muteButton.innerText = video.muted ? 'Unmute' : 'Mute';
+  });
+
   let slowCount = 0;
   let speedCount = 0;
-
 
   function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
@@ -67,11 +74,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     console.log(`Current time: ${video.currentTime}`);
   })
 
-  const muteButton = document.getElementById('mute');
-  muteButton.addEventListener('click', function() {
-    video.muted = !video.muted;
-    muteButton.textContent = video.muted ? 'Unmute' : 'Mute';
-  });
+
+  video.classList.add('oldSchool');
 
 
   function updateVolumeInfo() {
@@ -79,7 +83,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     volumeInfo.textContent = `${Math.round(video.volume * 100)}%`;
   }
 
-  document.getElementById('removeOldSchoolButton').addEventListener('click', function() {
+  oldSchoolButton.addEventListener('click', function() {
+    video.classList.add('oldSchool');
+  });
+
+  originalButton.addEventListener('click', function() {
     video.classList.remove('oldSchool');
   });
 
