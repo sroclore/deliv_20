@@ -5,8 +5,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
   video.autoplay = false;
   video.loop = false;
 
-  const oldSchoolButton = document.getElementById('oldSchool');
-  const originalButton = document.getElementById('original');
+  const oldSchoolButton = document.getElementById('vintage');
+  const originalButton = document.getElementById('orig');
+  video.classList.remove('oldSchool');
+  
 
   const volumeSlider = document.getElementById('slider');
   volumeSlider.addEventListener('input', () => {
@@ -14,15 +16,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
   });
 
   const muteButton = document.getElementById('mute');
+  
+  let slowCount = 0;
+  let speedCount = 0;
 
   muteButton.addEventListener('click', function() {
     video.muted = !video.muted;
     muteButton.innerText = video.muted ? 'Unmute' : 'Mute';
   });
-
-  let slowCount = 0;
-  let speedCount = 0;
-
+  
   function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
     const secondsPart = Math.floor(seconds % 60);
@@ -42,7 +44,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     video.play();
     updateVolumeInfo();
   })
-
 
   document.getElementById('pause').addEventListener('click', function() {
     video.pause();
@@ -73,10 +74,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
     console.log(`Current time: ${video.currentTime}`);
   })
-
-
-  video.classList.add('oldSchool');
-
 
   function updateVolumeInfo() {
     const volumeInfo = document.getElementById('volume-info');
