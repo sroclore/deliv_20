@@ -5,6 +5,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
   video.autoplay = false;
   video.loop = false;
 
+  video.classList.add('oldSchool');
+
+  const volumeSlider = document.getElementById('slider');
+  volumeSlider.addEventListener('input', () => {
+  video.volume = volumeSlider.value / 100;
+  });
+
+  let slowCount = 0;
+  let speedCount = 0;
+
 
   function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
@@ -17,8 +27,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('duration').textContent = formatTime(video.duration);
   }
 
-  video.addEventListener('loadmetadata', updateTime);
-
+  video.addEventListener('loadedmetadata', updateTime);
+  
   video.addEventListener('timeupdate', updateTime);
 
   document.getElementById('play').addEventListener('click', function() {
@@ -31,4 +41,46 @@ document.addEventListener('DOMContentLoaded', (event) => {
     video.pause();
   })
 
-})
+
+  document.getElementById('slower').addEventListener('click', function() {
+    slowCount++;
+    video.playbackRate -= 0.1;
+    console.log(`New speed: ${video.playbackRate}`);
+  })
+
+  document.getElementById('faster').addEventListener('click', function() {
+    if (slowCount > speedCount) {
+      video.playbackRate += 0.1; // Speed up by 10%
+      speedCount++;
+      console.log(`New speed: ${video.playbackRate}`);
+    } else {
+      console.log("Cannot speed up beyond original speed");
+    }
+    })
+
+  document.getElementById('skip-ahead').addEventListener('click', function() {
+    if (video.currentTime + 10 < video.duration) {
+      video.currentTime += 10;
+    } else {
+      video.currentTime = 0;
+    }
+    console.log(`Current time: ${video.currentTime}`);
+  })
+
+  const muteButton = document.getElementById('mute');
+  muteButton.addEventListener('click', function() {
+    video.muted = !video.muted;
+    muteButton.textContent = video.muted ? 'Unmute' : 'Mute';
+  });
+
+
+  function updateVolumeInfo() {
+    const volumeInfo = document.getElementById('volume-info');
+    volumeInfo.textContent = `${Math.round(video.volume * 100)}%`;
+  }
+
+  document.getElementById('removeOldSchoolButton').addEventListener('click', function() {
+    video.classList.remove('oldSchool');
+  });
+
+});
