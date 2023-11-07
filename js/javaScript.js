@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', (event) => {
 
   const video = document.getElementById('player1');
@@ -12,8 +13,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
   }
 
   function updateTime() {
-    document.getElementById('currentTime').textContent = formatTime(video.currentTime)
-    document.getElementById('duration').textContent = formatTime(video.duration)
+    document.getElementById('currentTime').textContent = formatTime(video.currentTime);
+    document.getElementById('duration').textContent = formatTime(video.duration);
   }
 
   video.addEventListener('loadmetadata', updateTime);
